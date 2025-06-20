@@ -12,23 +12,23 @@ public class PointRecord implements IPointRecord {
     static private int count=1;
     @Id
     private int id;
-    private LocalDateTime dataAcquisto;
-    private int numTessera;
-    private int codiceOrdine;
+    private LocalDateTime purDate;
+    private int numCard;
+    private int orderCode;
     private int money;
-    private int valPunti;
+    private int valPoint;
 
     public PointRecord() {
     }
 
-    public PointRecord(LocalDateTime dataAcquisto, int numTessera, int codiceOrdine, int money,
-            int valPunti) {
+    public PointRecord(LocalDateTime purDate, int numCard, int orderCode, int money,
+            int valPoint) {
         this.id = count;
-        this.dataAcquisto = dataAcquisto;
-        this.numTessera = numTessera;
-        this.codiceOrdine = codiceOrdine;
+        this.purDate = purDate;
+        this.numCard = numCard;
+        this.orderCode = orderCode;
         this.money = money;
-        this.valPunti = valPunti;
+        this.valPoint = valPoint;
     }
 
     public int getId() {
@@ -39,28 +39,28 @@ public class PointRecord implements IPointRecord {
         this.id = id;
     }
 
-    public LocalDateTime getDataAcquisto() {
-        return this.dataAcquisto;
+    public LocalDateTime getpurDate() {
+        return this.purDate;
     }
 
-    public void setDataAcquisto(LocalDateTime dataAcquisto) {
-        this.dataAcquisto = dataAcquisto;
+    public void setpurDate(LocalDateTime purDate) {
+        this.purDate = purDate;
     }
 
-    public int getNumTessera() {
-        return this.numTessera;
+    public int getNumCard() {
+        return this.numCard;
     }
 
-    public void setNumTessera(int numTessera) {
-        this.numTessera = numTessera;
+    public void setNumCard(int numCard) {
+        this.numCard = numCard;
     }
 
-    public int getCodiceOrdine() {
-        return this.codiceOrdine;
+    public int getorderCode() {
+        return this.orderCode;
     }
 
-    public void setCodiceOrdine(int codiceOrdine) {
-        this.codiceOrdine = codiceOrdine;
+    public void setorderCode(int orderCode) {
+        this.orderCode = orderCode;
     }
 
     public int getmoney() {
@@ -71,23 +71,23 @@ public class PointRecord implements IPointRecord {
         this.money = money;
     }
 
-    public int getValPunti() {
-        return this.valPunti;
+    public int getValPoint() {
+        return this.valPoint;
     }
 
-    public void setValPunti(int valPunti) {
-        this.valPunti = valPunti;
+    public void setValPoint(int valPoint) {
+        this.valPoint = valPoint;
     }
 
     @Override
     public String toString() {
         return "{" +
                 " id='" + getId() + "'" +
-                ", dataAcquisto='" + getDataAcquisto() + "'" +
-                ", numTessera='" + getNumTessera() + "'" +
-                ", codiceOrdine='" + getCodiceOrdine() + "'" +
+                ", purDate='" + getpurDate() + "'" +
+                ", numCard='" + getNumCard() + "'" +
+                ", orderCode='" + getorderCode() + "'" +
                 ", money='" + getmoney() + "'" +
-                ", valPunti='" + getValPunti() + "'" +
+                ", valPoint='" + getValPoint() + "'" +
                 "}";
     }
 
@@ -99,14 +99,14 @@ public class PointRecord implements IPointRecord {
             return false;
         }
         PointRecord pointRecord = (PointRecord) o;
-        return id == pointRecord.id && Objects.equals(dataAcquisto, pointRecord.dataAcquisto)
-                && numTessera == pointRecord.numTessera && codiceOrdine == pointRecord.codiceOrdine
-                && money == pointRecord.money && valPunti == pointRecord.valPunti;
+        return id == pointRecord.id && Objects.equals(purDate, pointRecord.purDate)
+                && numCard == pointRecord.numCard && orderCode == pointRecord.orderCode
+                && money == pointRecord.money && valPoint == pointRecord.valPoint;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dataAcquisto, numTessera, codiceOrdine, money, valPunti);
+        return Objects.hash(id, purDate, numCard, orderCode, money, valPoint);
     }
 
 }
