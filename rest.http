@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "balancePoint": 100,
-  "codFisc": "RSSMRA80A01H501g"
+  "codFisc": "RSSMRA80A01H500g"
 }
 
 ### 2. Ottieni tutte le carte

@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
 
 @Entity
 public class PointRecord {
@@ -15,8 +16,11 @@ public class PointRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime purDate;
+    @Min(value = 0, message = "Il numero della carta deve essere maggiore o uguale a zero")
     private Long numCard;
+    @Min(value = 0, message = "Il codice dell'ordine deve essere maggiore o uguale a zero")
     private Long orderCode;
+    @Min(value = 0, message = "L'importo deve essere maggiore o uguale a zero")
     private int money;
     private int valPoint;
 

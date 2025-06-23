@@ -6,16 +6,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Card {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numCard;
-    @NotBlank(message = "Il codice fiscale non può essere vuoto")
+
+    @Min(value = 0, message = "Il saldo punti deve essere maggiore o uguale a zero")
     private int balancePoint;
+
     @NotBlank(message = "Il codice fiscale non può essere vuoto")
     private String codFisc;
 
