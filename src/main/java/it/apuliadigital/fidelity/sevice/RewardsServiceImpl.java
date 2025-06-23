@@ -73,7 +73,7 @@ public class RewardsServiceImpl implements IRewards {
 
     @Override
     public Optional<Rewards> getRewardByName(String name) {
-        return rewardsRepository.findByNome(name);
+        return rewardsRepository.findByNomeContains(name);
     }
 
     @Override

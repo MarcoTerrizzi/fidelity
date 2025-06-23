@@ -3,10 +3,8 @@ package it.apuliadigital.fidelity.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class RecordRewards {
@@ -15,12 +13,21 @@ public class RecordRewards {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Il numero della tessera non può essere nullo")
     private Long numTessera;
+
+    @NotNull(message = "L'ID del premio riscattato non può essere nullo")
     private Long premioRiscattato;
+
+    @NotBlank(message = "Il nome del premio riscattato non può essere vuoto")
+    @Size(max = 100, message = "Il nome del premio può contenere al massimo 100 caratteri")
     private String nomePremioRiscattato;
+
+    @PastOrPresent(message = "La data di acquisizione non può essere futura")
     private LocalDateTime dataAcquisizione;
 
     public RecordRewards() {
+        this.dataAcquisizione = LocalDateTime.now();
     }
 
     public RecordRewards(Long numTessera, Long premioRiscattato, String nomePremioRiscattato) {
@@ -73,12 +80,11 @@ public class RecordRewards {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (!(o instanceof RecordRewards)) return false;
         RecordRewards that = (RecordRewards) o;
-        return Objects.equals(id, that.id) && Objects.equals(numTessera, that.numTessera)
+        return Objects.equals(id, that.id)
+                && Objects.equals(numTessera, that.numTessera)
                 && Objects.equals(premioRiscattato, that.premioRiscattato)
                 && Objects.equals(nomePremioRiscattato, that.nomePremioRiscattato)
                 && Objects.equals(dataAcquisizione, that.dataAcquisizione);

@@ -11,7 +11,7 @@ import it.apuliadigital.fidelity.model.Rewards;
 @Repository
 public interface RewardsRepository extends JpaRepository<Rewards, Long> {
 
-    Optional<Rewards> findByNome(String nome);
+    Optional<Rewards> findByNomeContains(String nome);
 
     List<Rewards> findByPuntiNecessari(int puntiNecessari);
 }

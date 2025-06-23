@@ -14,7 +14,6 @@ public class PointRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime purDate;
     private Long numCard;
     private Long orderCode;

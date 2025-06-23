@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.apuliadigital.fidelity.model.Card;
 import it.apuliadigital.fidelity.sevice.Interface.ICard;
-
+@Validated
 @RestController
 @RequestMapping("/cards")
 public class CardController {
@@ -25,7 +26,7 @@ public class CardController {
 
     // crea una nuova carta fedeltà
     @PostMapping
-    public ResponseEntity<Card> createCard(@RequestBody Card card) {
+    public ResponseEntity<Card> createCard(@RequestBody  Card card) {
         try {
             Card createdCard = cardService.createCard(card);
             return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
@@ -47,7 +48,7 @@ public class CardController {
 
     // restituisce una carta fedeltà per id
     @GetMapping("/{id}")
-    public ResponseEntity<Card> getCardById(@PathVariable("id") Long id) {
+    public ResponseEntity<Card> getCardById(@PathVariable("id")  Long id) {
         return cardService.getCardById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

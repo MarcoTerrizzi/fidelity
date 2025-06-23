@@ -2,10 +2,8 @@ package it.apuliadigital.fidelity.model;
 
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Rewards {
@@ -13,8 +11,16 @@ public class Rewards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Il nome del premio non può essere vuoto")
+    @Size(max = 100, message = "Il nome può contenere massimo 100 caratteri")
     private String nome;
+
+    @Min(value = 1, message = "I punti necessari devono essere almeno 1")
     private int puntiNecessari;
+
+    @NotBlank(message = "La descrizione non può essere vuota")
+    @Size(max = 255, message = "La descrizione può contenere massimo 255 caratteri")
     private String descrizione;
 
     public Rewards() {

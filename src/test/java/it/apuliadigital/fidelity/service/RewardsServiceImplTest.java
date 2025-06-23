@@ -150,23 +150,23 @@ public class RewardsServiceImplTest {
 
     @Test
     public void testGetRewardByName_Found() {
-        when(rewardsRepository.findByNome("Test Reward")).thenReturn(Optional.of(reward));
+        when(rewardsRepository.findByNomeContains("Test Reward")).thenReturn(Optional.of(reward));
 
         Optional<Rewards> result = rewardsService.getRewardByName("Test Reward");
 
         assertTrue(result.isPresent());
         assertEquals("Test Reward", result.get().getNome());
-        verify(rewardsRepository, times(1)).findByNome("Test Reward");
+        verify(rewardsRepository, times(1)).findByNomeContains("Test Reward");
     }
 
     @Test
     public void testGetRewardByName_NotFound() {
-        when(rewardsRepository.findByNome("Unknown")).thenReturn(Optional.empty());
+        when(rewardsRepository.findByNomeContains("Unknown")).thenReturn(Optional.empty());
 
         Optional<Rewards> result = rewardsService.getRewardByName("Unknown");
 
         assertFalse(result.isPresent());
-        verify(rewardsRepository, times(1)).findByNome("Unknown");
+        verify(rewardsRepository, times(1)).findByNomeContains("Unknown");
     }
 
     @Test
