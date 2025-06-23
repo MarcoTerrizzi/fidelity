@@ -3,58 +3,60 @@ package it.apuliadigital.fidelity.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import it.apuliadigital.fidelity.sevice.Interface.IRecordRewards;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class RecordRewards implements IRecordRewards {
-    @Id
-    private int id;
+public class RecordRewards {
 
-    private int numTessera;
-    private int premioRiscattato;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long numTessera;
+    private Long premioRiscattato;
     private String nomePremioRiscattato;
     private LocalDateTime dataAcquisizione;
 
     public RecordRewards() {
     }
 
-    public RecordRewards(int id, int numTessera, int premioRiscattato, String nomePremioRiscattato,
-            LocalDateTime dataAcquisizione) {
-        this.id = id;
+    public RecordRewards(Long numTessera, Long premioRiscattato, String nomePremioRiscattato) {
         this.numTessera = numTessera;
         this.premioRiscattato = premioRiscattato;
         this.nomePremioRiscattato = nomePremioRiscattato;
-        this.dataAcquisizione = dataAcquisizione;
+        this.dataAcquisizione = LocalDateTime.now();
     }
 
-    public int getId() {
-        return this.id;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumTessera() {
-        return this.numTessera;
+    public Long getNumTessera() {
+        return numTessera;
     }
 
-    public void setNumTessera(int numTessera) {
+    public void setNumTessera(Long numTessera) {
         this.numTessera = numTessera;
     }
 
-    public int getPremioRiscattato() {
-        return this.premioRiscattato;
+    public Long getPremioRiscattato() {
+        return premioRiscattato;
     }
 
-    public void setPremioRiscattato(int premioRiscattato) {
+    public void setPremioRiscattato(Long premioRiscattato) {
         this.premioRiscattato = premioRiscattato;
     }
 
     public String getNomePremioRiscattato() {
-        return this.nomePremioRiscattato;
+        return nomePremioRiscattato;
     }
 
     public void setNomePremioRiscattato(String nomePremioRiscattato) {
@@ -62,7 +64,7 @@ public class RecordRewards implements IRecordRewards {
     }
 
     public LocalDateTime getDataAcquisizione() {
-        return this.dataAcquisizione;
+        return dataAcquisizione;
     }
 
     public void setDataAcquisizione(LocalDateTime dataAcquisizione) {
@@ -71,16 +73,15 @@ public class RecordRewards implements IRecordRewards {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this)
+        if (this == o)
             return true;
-        if (!(o instanceof RecordRewards)) {
+        if (o == null || getClass() != o.getClass())
             return false;
-        }
-        RecordRewards recordRewards = (RecordRewards) o;
-        return id == recordRewards.id && numTessera == recordRewards.numTessera
-                && premioRiscattato == recordRewards.premioRiscattato
-                && Objects.equals(nomePremioRiscattato, recordRewards.nomePremioRiscattato)
-                && Objects.equals(dataAcquisizione, recordRewards.dataAcquisizione);
+        RecordRewards that = (RecordRewards) o;
+        return Objects.equals(id, that.id) && Objects.equals(numTessera, that.numTessera)
+                && Objects.equals(premioRiscattato, that.premioRiscattato)
+                && Objects.equals(nomePremioRiscattato, that.nomePremioRiscattato)
+                && Objects.equals(dataAcquisizione, that.dataAcquisizione);
     }
 
     @Override
@@ -90,13 +91,12 @@ public class RecordRewards implements IRecordRewards {
 
     @Override
     public String toString() {
-        return "{" +
-                " id='" + id + "'" +
-                ", numTessera='" + numTessera + "'" +
-                ", premioRiscattato='" + premioRiscattato + "'" +
-                ", nomePremioRiscattato='" + nomePremioRiscattato + "'" +
-                ", dataAcquisizione='" + dataAcquisizione + "'" +
-                "}";
+        return "RecordRewards{" +
+                "id=" + id +
+                ", numTessera=" + numTessera +
+                ", premioRiscattato=" + premioRiscattato +
+                ", nomePremioRiscattato='" + nomePremioRiscattato + '\'' +
+                ", dataAcquisizione=" + dataAcquisizione +
+                '}';
     }
-
 }

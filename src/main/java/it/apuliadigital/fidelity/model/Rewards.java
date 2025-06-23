@@ -2,12 +2,17 @@ package it.apuliadigital.fidelity.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-public class Rewards  {
-    static private int count = 1;
+@Entity
+public class Rewards {
+
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
     private int puntiNecessari;
     private String descrizione;
@@ -15,23 +20,23 @@ public class Rewards  {
     public Rewards() {
     }
 
-    public Rewards(int id, String nome, int puntiNecessari, String descrizione) {
-        this.id = count++;
+    public Rewards(String nome, int puntiNecessari, String descrizione) {
         this.nome = nome;
         this.puntiNecessari = puntiNecessari;
         this.descrizione = descrizione;
     }
 
-    public int getId() {
-        return this.id;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public String getNome() {
-        return this.nome;
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -39,7 +44,7 @@ public class Rewards  {
     }
 
     public int getPuntiNecessari() {
-        return this.puntiNecessari;
+        return puntiNecessari;
     }
 
     public void setPuntiNecessari(int puntiNecessari) {
@@ -47,7 +52,7 @@ public class Rewards  {
     }
 
     public String getDescrizione() {
-        return this.descrizione;
+        return descrizione;
     }
 
     public void setDescrizione(String descrizione) {
@@ -56,14 +61,13 @@ public class Rewards  {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this)
+        if (this == o)
             return true;
-        if (!(o instanceof Rewards)) {
+        if (o == null || getClass() != o.getClass())
             return false;
-        }
         Rewards rewards = (Rewards) o;
-        return id == rewards.id && Objects.equals(nome, rewards.nome) && puntiNecessari == rewards.puntiNecessari
-                && Objects.equals(descrizione, rewards.descrizione);
+        return puntiNecessari == rewards.puntiNecessari && Objects.equals(id, rewards.id)
+                && Objects.equals(nome, rewards.nome) && Objects.equals(descrizione, rewards.descrizione);
     }
 
     @Override
@@ -73,12 +77,11 @@ public class Rewards  {
 
     @Override
     public String toString() {
-        return "{" +
-                " id='" + id + "'" +
-                ", nome='" + nome + "'" +
-                ", puntiNecessari='" + puntiNecessari + "'" +
-                ", descrizione='" + descrizione + "'" +
-                "}";
+        return "Rewards{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", puntiNecessari=" + puntiNecessari +
+                ", descrizione='" + descrizione + '\'' +
+                '}';
     }
-
 }

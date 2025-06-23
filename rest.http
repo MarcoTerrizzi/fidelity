@@ -1,0 +1,87 @@
+# Richieste per CardController (/cards)
+
+### 1. Crea una nuova carta fedeltà
+POST http://localhost:8080/cards
+Content-Type: application/json
+
+{
+  "balancePoint": 100,
+  "codFisc": "RSfMRA80A01H501g"
+}
+
+### 2. Ottieni tutte le carte
+GET http://localhost:8080/cards
+
+### 3. Ottieni una carta specifica per ID
+GET http://localhost:8080/cards/1
+
+### 4. Cerca una carta per Codice Fiscale
+GET http://localhost:8080/cards/search?codFisc=RSSMRA80A01H501U
+
+### 5. Aggiungi punti a una carta
+POST http://localhost:8080/cards/1/add-points?points=50
+
+### 6. Rimuovi punti da una carta
+POST http://localhost:8080/cards/1/remove-points?points=20
+
+
+###
+# Richieste per RewardController (/rewards)
+
+### 7. Crea un nuovo premio
+POST http://localhost:8080/rewards
+Content-Type: application/json
+
+{
+  "nome": "Buono Sconto 10%",
+  "puntiNecessari": 100,
+  "descrizione": "Un buono sconto del 10% sul prossimo acquisto."
+}
+
+### 8. Ottieni tutti i premi disponibili
+GET http://localhost:8080/rewards
+
+### 9. Ottieni un premio specifico per ID
+GET http://localhost:8080/rewards/1
+
+### 10. Cerca un premio per nome
+GET http://localhost:8080/rewards/search/by-name?name=valigia
+
+### 11. Cerca premi per punti necessari
+GET http://localhost:8080/rewards/search/by-points?points=100
+
+### 12. Riscatta un premio per una carta
+POST http://localhost:8080/rewards/redeem?cardId=1&rewardId=2
+
+### 13. Ottieni tutti i record dei premi riscattati
+GET http://localhost:8080/rewards/redeemed
+
+### 14. Ottieni i premi riscattati da una specifica carta
+GET http://localhost:8080/rewards/redeemed/by-card/1
+
+
+###
+
+# Richieste per PointRecordController (/point-records)
+
+### 15. Crea un nuovo record di punti 
+POST http://localhost:8080/point-records
+Content-Type: application/json
+
+{
+  "purDate": "2025-06-21T18:30:00",
+  "numCard": 1,
+  "orderCode": 12345,
+  "money": 50,
+  "valPoint": 50
+}
+
+
+### 16. Ottieni tutti i record di punti
+GET http://localhost:8080/point-records
+
+### 17. Ottieni i record di punti per una specifica carta
+GET http://localhost:8080/point-records/by-card/1
+
+### 18. Ottieni i record di punti per uno specifico ordine
+GET http://localhost:8080/point-records/by-order/12345

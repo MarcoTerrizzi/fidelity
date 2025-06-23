@@ -1,47 +1,71 @@
 package it.apuliadigital.fidelity.sevice;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.apuliadigital.fidelity.model.Card;
-import jakarta.transaction.Transactional;
-
-interface CardRepository extends CrudRepository<Card, Integer> {
-}
+import it.apuliadigital.fidelity.repository.CardRepository;
+import it.apuliadigital.fidelity.sevice.Interface.ICard;
 
 @Service
 @Transactional
-public class CardServiceImpl {
+public class CardServiceImpl implements ICard {
+
     @Autowired
-    private CardRepository repository;
+    private CardRepository cardRepository;
 
-    public ResponseEntity<Card> createCard(int balancePunti, String codFisc) {
-        Card card = new Card(balancePunti, codFisc);
-        repository.save(card);
-        java.net.URI location = java.net.URI.create("/cards/" + card.getId());
-        return ResponseEntity.created(location).body(card);
+    @Override
+    public List<Card> getAllCards() {
+        return cardRepository.findAll();
     }
 
-    public ResponseEntity<Card> removebalancePoint(int numTessera, int remove) {
-        Card card = repository.findById((int) numTessera).orElse(null);
-        if (card == null) {
-            return ResponseEntity.notFound().build();
+    @Override
+    public Optional<Card> getCardById(Long cardId) {
+        return cardRepository.findById(cardId);
+    }
+
+    @Override
+    public Card createCard(Card card) {
+        // Assume findByCodFisc returns Optional<Card>
+        if (cardRepository.findByCodFisc(card.getCodFisc()).isPresent()) {
+            throw new IllegalArgumentException("A card with this Cod Fisc already exists.");
         }
-        card.setBalancePoint(card.getBalancePoint() - remove);
-        repository.save(card);
-        return ResponseEntity.ok(card);
+        return cardRepository.save(card);
     }
 
-    public ResponseEntity<Card> addbalancePoint(int numTessera, int add) {
-        Card card = repository.findById((int) numTessera).orElse(null);
-        if (card == null) {
-            return ResponseEntity.notFound().build();
-        }
-        card.setBalancePoint(card.getBalancePoint() + add);
-        repository.save(card);
-        return ResponseEntity.ok(card);
+    @Override
+    public Optional<Card> addPointsToCard(Long cardId, int pointsToAdd) {
+        return cardRepository.findById(cardId).map(card -> {
+            card.setBalancePoint(card.getBalancePoint() + pointsToAdd);
+            return cardRepository.save(card);
+        });
     }
 
+    @Override
+    public Optional<Card> removePointsFromCard(Long cardId, int pointsToRemove) {
+        return cardRepository.findById(cardId).map(card -> {
+            int currentPoints = card.getBalancePoint();
+            if (currentPoints >= pointsToRemove) {
+                card.setBalancePoint(currentPoints - pointsToRemove);
+                return cardRepository.save(card);
+            } else {
+                // Throw an exception if not enough points
+                throw new IllegalArgumentException("Not enough points to remove from the card.");
+            }
+        });
+    }
+
+    @Override
+    public Optional<Card> getCardByCodFisc(String codFisc) {
+        return cardRepository.findByCodFisc(codFisc);
+    }
+
+    @Override
+    public Optional<Card> getCardBalance(Long id) {
+         throw new UnsupportedOperationException("Unimplemented method 'getCardBalance'");
+    }
 }

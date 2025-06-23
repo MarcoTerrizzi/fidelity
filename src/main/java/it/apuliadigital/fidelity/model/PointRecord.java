@@ -1,29 +1,30 @@
 package it.apuliadigital.fidelity.model;
 
 import java.time.LocalDateTime;
-
-import it.apuliadigital.fidelity.sevice.Interface.IPointRecord;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 @Entity
-public class PointRecord implements IPointRecord {
-    static private int count=1;
+public class PointRecord {
+
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private LocalDateTime purDate;
-    private int numCard;
-    private int orderCode;
+    private Long numCard;
+    private Long orderCode;
     private int money;
     private int valPoint;
 
     public PointRecord() {
     }
 
-    public PointRecord(LocalDateTime purDate, int numCard, int orderCode, int money,
-            int valPoint) {
-        this.id = count;
+    public PointRecord(LocalDateTime purDate, Long numCard, Long orderCode, int money, int valPoint) {
         this.purDate = purDate;
         this.numCard = numCard;
         this.orderCode = orderCode;
@@ -31,48 +32,49 @@ public class PointRecord implements IPointRecord {
         this.valPoint = valPoint;
     }
 
-    public int getId() {
-        return this.id;
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public LocalDateTime getpurDate() {
-        return this.purDate;
+    public LocalDateTime getPurDate() {
+        return purDate;
     }
 
-    public void setpurDate(LocalDateTime purDate) {
+    public void setPurDate(LocalDateTime purDate) {
         this.purDate = purDate;
     }
 
-    public int getNumCard() {
-        return this.numCard;
+    public Long getNumCard() {
+        return numCard;
     }
 
-    public void setNumCard(int numCard) {
+    public void setNumCard(Long numCard) {
         this.numCard = numCard;
     }
 
-    public int getorderCode() {
-        return this.orderCode;
+    public Long getOrderCode() {
+        return orderCode;
     }
 
-    public void setorderCode(int orderCode) {
+    public void setOrderCode(Long orderCode) {
         this.orderCode = orderCode;
     }
 
-    public int getmoney() {
-        return this.money;
+    public int getMoney() {
+        return money;
     }
 
-    public void setmoney(int money) {
+    public void setMoney(int money) {
         this.money = money;
     }
 
     public int getValPoint() {
-        return this.valPoint;
+        return valPoint;
     }
 
     public void setValPoint(int valPoint) {
@@ -80,28 +82,15 @@ public class PointRecord implements IPointRecord {
     }
 
     @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", purDate='" + getpurDate() + "'" +
-                ", numCard='" + getNumCard() + "'" +
-                ", orderCode='" + getorderCode() + "'" +
-                ", money='" + getmoney() + "'" +
-                ", valPoint='" + getValPoint() + "'" +
-                "}";
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (o == this)
+        if (this == o)
             return true;
-        if (!(o instanceof PointRecord)) {
+        if (o == null || getClass() != o.getClass())
             return false;
-        }
-        PointRecord pointRecord = (PointRecord) o;
-        return id == pointRecord.id && Objects.equals(purDate, pointRecord.purDate)
-                && numCard == pointRecord.numCard && orderCode == pointRecord.orderCode
-                && money == pointRecord.money && valPoint == pointRecord.valPoint;
+        PointRecord that = (PointRecord) o;
+        return money == that.money && valPoint == that.valPoint && Objects.equals(id, that.id)
+                && Objects.equals(purDate, that.purDate) && Objects.equals(numCard, that.numCard)
+                && Objects.equals(orderCode, that.orderCode);
     }
 
     @Override
@@ -109,4 +98,15 @@ public class PointRecord implements IPointRecord {
         return Objects.hash(id, purDate, numCard, orderCode, money, valPoint);
     }
 
+    @Override
+    public String toString() {
+        return "PointRecord{" +
+                "id=" + id +
+                ", purDate=" + purDate +
+                ", numCard=" + numCard +
+                ", orderCode=" + orderCode +
+                ", money=" + money +
+                ", valPoint=" + valPoint +
+                '}';
+    }
 }
